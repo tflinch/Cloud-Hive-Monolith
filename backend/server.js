@@ -1,18 +1,17 @@
 const express = require('express');
 const cors = require('cors');
-const app = express();
-const router = express.Router();
 const routes = require('./routes/routes');
-const PORT = process.env.PORT || 5000;
+const app = express();
+// Mount router at /api (so final paths are /api/, /api/data, /api/upload)
+app.use('/api', routes);
 
-app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // no trailing slashes
+    credentials: false,
+  })
+);
 
-app.get('/', (req, res) => {
-  res.send('Hello from the backend server!');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`API listening on ${PORT}`));
