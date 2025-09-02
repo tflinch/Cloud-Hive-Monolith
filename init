@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Get a list of all scheduled at jobs
+jobs_id=$(atq | awk '{print $1}')
+
+# Loop through jobs_id and remove each job ID
+for job_id in $jobs_id; do
+	atrm $job_id
+done
+echo "Previously scheduled tasks cleared"
+
+# Wait for previous instances to finish closing
+#sleep 2s
+
+# Calculate the next hour
+next_hour=$(date -d "+1 hour" +'%H:00')
+
+# Reschedule this script to run at the next hour
+echo "/home/hivepi/LIDAR/process_kill.sh" | at $next_hour
+
+# Wait for scheduling to complete
+#sleep 2s
+
+# Initialize VLC Player and control socket
+cvlc -R -f --no-osd -I oldrc --rc-unix /tmp/vlc-control /home/hivepi/LIDAR/video1.mp4

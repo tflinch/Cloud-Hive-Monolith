@@ -1,0 +1,4 @@
+#!/bin/bash
+#sleep 20s
+cd /home/hivepi/LIDAR/
+./app | python ./script.py
