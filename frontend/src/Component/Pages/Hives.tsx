@@ -25,6 +25,7 @@ function Hives() {
         <input type='file' id='file' name='file' accept='.mp4,.mp3' />
         <button type='submit'>Upload</button>
       </form>
+      <button> Generate with ai</button>
     </div>
   );
 }
