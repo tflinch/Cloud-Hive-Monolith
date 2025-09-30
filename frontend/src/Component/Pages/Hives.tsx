@@ -1,5 +1,5 @@
 import React from 'react';
-import { testApi, uploadFile } from '../../services/api/api';
+import { uploadFile } from '../../services/api/api';
 
 function Hives() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
