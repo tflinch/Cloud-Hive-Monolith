@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { uploadFile } from '../../services/api/api';
 
 type AISliderProps = {
@@ -85,6 +85,7 @@ export default function AISlider({ open, onClose, onConfirm }: AISliderProps) {
         type: blob.type || 'video/mp4',
       });
       setPreviewFile(file);
+      console.log('[AI] Confirmed file:', previewFile);
 
       const result = await uploadFile(file);
       onConfirm?.(file, result);

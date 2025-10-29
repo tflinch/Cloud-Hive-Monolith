@@ -7,7 +7,7 @@ import PublicOnlyRoute from './routes/PublicOnlyRoute';
 import Navbar from './Component/Navbar/Navbar';
 import Dashboard from './Component/Pages/Dashboard';
 import Hives from './Component/Pages/Hives';
-import Login from './pages/login';
+import Login from './pages/Login';
 import Signup from './pages/Signup';
 import './App.scss';
 
