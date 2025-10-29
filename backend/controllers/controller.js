@@ -27,6 +27,7 @@ exports.forwardUploadToFlask = async (req, res) => {
       headers: form.getHeaders(),
       maxContentLength: Infinity,
       maxBodyLength: Infinity,
+      timeout: 120000,
     });
 
     // Relay Flask response back to the client
