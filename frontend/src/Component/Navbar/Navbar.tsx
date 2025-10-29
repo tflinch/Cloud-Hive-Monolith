@@ -1,29 +1,69 @@
-import React from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './../../contexts/AuthContext';
 
-function Navbar() {
+export default function Navbar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    try {
+      await logout();
+      navigate('/login', { replace: true });
+    } catch {
+      // optional: toast or inline error
+    }
+  }
+
   return (
-    <div className='navbar'>
-      <nav
-        className='navbar__container'
-        style={{
-          padding: '10px',
-          backgroundColor: '#282c34',
-          color: 'white',
-          display: 'flex',
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-        }}
-      >
-        <h1>My Application</h1>
-        <ul>
-          <li>
-            <a href='/'>Dashboard</a>
-          </li>
-          {/* Add more navigation items here */}
-        </ul>
-      </nav>
-    </div>
+    <nav className='navbar' role='navigation' aria-label='Global'>
+      <div className='navbar__inner'>
+        {/* Brand — left */}
+        <Link
+          to={user ? '/dashboard' : '/'}
+          className='navbar__brand'
+          aria-label='CiC-CMS Home'
+        >
+          CiC-CMS
+        </Link>
+
+        {/* Right cluster (links + auth) */}
+        <div className='navbar__right'>
+          {/* Protected links — only render when signed in */}
+          {user && (
+            <div className='navbar__links' aria-label='Primary'>
+              <NavLink to='/dashboard' end className='navbar__link'>
+                Dashboard
+              </NavLink>
+              <NavLink to='/hives' className='navbar__link'>
+                Hives
+              </NavLink>
+            </div>
+          )}
+
+          {/* Auth controls */}
+          <div className='navbar__auth'>
+            {user ? (
+              <>
+                <span className='navbar__user' title={user.email || ''}>
+                  {user.email}
+                </span>
+                <button className='btn btn--sm' onClick={handleLogout}>
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink to='/login' className='btn-link'>
+                  Log in
+                </NavLink>
+                <NavLink to='/signup' className='btn btn--sm'>
+                  Sign up
+                </NavLink>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 }
-
-export default Navbar;
